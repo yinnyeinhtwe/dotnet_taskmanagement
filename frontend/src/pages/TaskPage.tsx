@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { getAllTasks } from '../api/taskService';
+import React, { useState, useEffect } from 'react';
+import { getAllTasks, type Task } from '../api/taskService';
 import TaskForm from '../components/TaskForm';
 import TaskList from '../components/TaskList';
 
 export default function TasksPage() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,18 +22,14 @@ export default function TasksPage() {
     }
   };
 
-  const handleTaskCreated = (newTask) => {
-    setTasks([...tasks, newTask]);
-  };
-
   return (
     <div className="max-w-xl mx-auto py-10 px-4">
       <header className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Task Manager</h2>
-        <p className="text-sm text-gray-500">.NET API + React Router + Tailwind CSS</p>
+        <p className="text-sm text-gray-500">Manage your tasks efficiently</p>
       </header>
-      
-      <TaskForm onTaskCreated={handleTaskCreated} />
+
+      <TaskForm onTaskCreated={(newTask) => setTasks([...tasks, newTask])} />
 
       <hr className="my-6 border-gray-200" />
 
